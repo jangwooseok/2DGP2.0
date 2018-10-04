@@ -82,6 +82,7 @@ def draw_curve_4_points(p1, p2, p3, p4):
 
 size = 20
 points = [(random.randint(0, KPU_WIDTH/2), random.randint(0, KPU_HEIGHT/2)) for i in range(size)]#좌표
+#points = [(-400,-400), (-300,400), (-200,-400), (-150,400), (-100,-400), (0,400), (10,-400), (-100,400), (-200,400), (-300,400)]#좌표
 
 n = 1
 
