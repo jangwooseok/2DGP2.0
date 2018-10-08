@@ -31,7 +31,7 @@ class Ball:
         #self.x, self.y = 0, 90
         #self.frame = 0
         self.x, self.y = random.randint(100, 700), 600
-        self.speed = random.randint(1, 10)
+        self.speed = random.randint(5, 10)
 
         self.image1 = load_image('ball21x21.png')
         self.image2 = load_image('ball41x41.png')
@@ -40,6 +40,10 @@ class Ball:
 
     def update(self):
         self.y -= self.speed
+        if self.y <= 70 and self.is_big_ball == 1:
+            self.y = 70
+        elif self.y <= 60 and self.is_big_ball == 0:
+            self.y = 60
 
     def draw(self):
         if self.is_big_ball == 0:
