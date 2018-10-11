@@ -27,16 +27,19 @@ class Grass:
     pass
 
 class Ball:
+    image1 = None
+    image2 = None
     def __init__(self):
         #self.x, self.y = 0, 90
         #self.frame = 0
         self.x, self.y = random.randint(100, 700), 600
         self.speed = random.randint(5, 10)
 
-        self.image1 = load_image('ball21x21.png')
-        self.image2 = load_image('ball41x41.png')
-
         self.is_big_ball = random.randint(0, 1)
+
+    def loadImage(self):
+        Ball.image1 = load_image('ball21x21.png')
+        Ball.image2 = load_image('ball41x41.png')
 
     def update(self):
         self.y -= self.speed
@@ -47,9 +50,9 @@ class Ball:
 
     def draw(self):
         if self.is_big_ball == 0:
-            self.image1.draw(self.x, self.y)
+            Ball.image1.draw(self.x, self.y)
         if self.is_big_ball == 1:
-            self.image2.draw(self.x, self.y)
+            Ball.image2.draw(self.x, self.y)
 
 def handle_events():
     global running
@@ -64,6 +67,7 @@ def handle_events():
 open_canvas()
 
 #boy = Boy()
+Ball().loadImage()
 team = [Boy() for i in range(11)]
 balls = [Ball() for j in range(20)]
 grass = Grass()
