@@ -2,6 +2,7 @@ import game_framework
 from pico2d import *
 
 import title_state
+import main_state
 
 name = "PauseState"
 image = None
@@ -35,6 +36,7 @@ def update():
 def draw():
     global image
     clear_canvas()
+    main_state.draw()
     image.draw(400, 300)
     update_canvas()
 
