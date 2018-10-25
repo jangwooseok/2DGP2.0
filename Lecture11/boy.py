@@ -102,7 +102,7 @@ class DashState:
         print('DASH!!!!')
 
         boy.dir = boy.velocity
-        boy.timer = 50
+        boy.timer = 40
     @staticmethod
     def exit(boy, event):
         # fill here
