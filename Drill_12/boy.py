@@ -15,6 +15,7 @@ RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
 GHOST_ASSENTION_SPEED_CMPS = 30.0
+GHOST_TIME_PER_RADIAN = 4 * 3.141592 * 60
 # Boy Action Speed
 # fill expressions correctly
 TIME_PER_ACTION = 0.5
@@ -61,7 +62,7 @@ class IdleState:
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         #boy.timer -= 1
-        if get_time() - boy.timer >= 3 - 1:
+        if get_time() - boy.timer >= 10 - 1:
             boy.add_event(SLEEP_TIMER)
 
     @staticmethod
@@ -116,7 +117,7 @@ class SleepState:
         boy.frame = 0
         global ghost_x, ghost_y
         global radian
-        radian = 0
+        radian = -3.141592
         ghost_x = boy.x
         ghost_y = boy.y
         boy.velocity = GHOST_ASSENTION_SPEED_CMPS
@@ -128,21 +129,22 @@ class SleepState:
     def do(boy):
         global ghost_x, ghost_y, radian
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        if (int(ghost_y) < 30 * boy.velocity * game_framework.frame_time + boy.y):
+        if (int(ghost_y) < 100 + boy.y):
             ghost_y += boy.velocity * game_framework.frame_time
         else:
-            radian += 1
+            #radian += 1
+            radian += GHOST_TIME_PER_RADIAN * game_framework.frame_time
     @staticmethod
     def draw(boy):
         global radian
 
         boy.image.opacify(0 + (random.randint(0, 9) * 0.1))
-        if (ghost_y >= 30 * boy.velocity * game_framework.frame_time + boy.y):
+        if (ghost_y >= 100 + boy.y):
             boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100,
-                                ghost_x - 25 + 100 * math.cos(math.radians(radian)),
-                                boy.y + 100 * math.sin(math.radians(radian)))
+                                ghost_x + 100 * math.cos(math.radians(radian)),
+                                ghost_y-25 + 100 * math.sin(math.radians(radian)))
         else:
-            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, int(ghost_y), 100, 3.141592 / 2, '', ghost_x - 25, int(ghost_y) - 25, 100, 100)
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', ghost_x - 25, int(ghost_y) - 25, 100, 100)
         boy.image.opacify(1)
 
         if boy.dir == 1:
